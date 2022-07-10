@@ -42,7 +42,7 @@ public class UserController : ControllerBase
     {
         if(user == null)
         {
-            return BadRequest($"User with id {user.Id} was not found");
+            return BadRequest($"Cannot create an empty object of type {typeof(User)}");
         }
         
         _repoWrapper.Users.Create(user);
@@ -62,7 +62,7 @@ public class UserController : ControllerBase
         
         if(userToUpdate == null)
         {
-            return NotFound($"Car with id {id} not found");
+            return NotFound($"User with id {id} not found");
         }
         
         userToUpdate.Name = user.Name;
@@ -81,7 +81,7 @@ public class UserController : ControllerBase
         
         if (user == null)
         {
-            return NotFound($"Car with id {id} not found");
+            return NotFound($"User with id {id} not found");
         }
         
         _repoWrapper.Users.Delete(user);

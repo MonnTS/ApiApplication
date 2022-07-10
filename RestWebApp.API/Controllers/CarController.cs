@@ -42,7 +42,7 @@ public class CarController : ControllerBase
     {
         if(car == null)
         {
-            return BadRequest($"Car with id {car.Id} was not found");
+            return BadRequest($"Cannot create an empty object of type {typeof(Car)}");
         }
         
         _repoWrapper.Cars.Create(car);
