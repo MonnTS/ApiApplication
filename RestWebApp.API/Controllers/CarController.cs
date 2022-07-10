@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RestWebApp.Contracts;
 using RestWebApp.Entities;
@@ -6,6 +7,7 @@ using RestWebApp.Entities.Models;
 namespace RestWebApp.API.Controllers;
 
 [ApiController]
+[Authorize]
 [Route("api/[controller]")]
 public class CarController : ControllerBase
 {
@@ -21,14 +23,16 @@ public class CarController : ControllerBase
     }
     
     [HttpGet]
+    [Authorize(Roles = "User, Admin")]
     public IActionResult GetAllCars()
     {
         var cars = _repoWrapper.Cars.GetAll();
-        _logger.LogInformation("Returned all cars from database.");
+        _logger.LogInformation("Returned all cars from database");
         return Ok(cars);
     }
     
     [HttpGet("{id:int}")]
+    [Authorize(Roles = "User, Admin")]
     public IActionResult GetCarById(int id)
     {
         var car = _repoWrapper.Cars.GetByCondition(x => x.Id == id).FirstOrDefault();
@@ -44,6 +48,7 @@ public class CarController : ControllerBase
     }
     
     [HttpPost]
+    [Authorize(Roles = "Admin")]
     public IActionResult CreateCar([FromBody] Car car)
     {
         _repoWrapper.Cars.Create(car);
@@ -53,6 +58,7 @@ public class CarController : ControllerBase
     }
     
     [HttpPut("{id:int}")]
+    [Authorize(Roles = "Admin")]
     public IActionResult UpdateCar(int id, [FromBody] Car car)
     {
         if(car.Id != id)
@@ -79,6 +85,7 @@ public class CarController : ControllerBase
     }
     
     [HttpDelete("{id:int}")]
+    [Authorize(Roles = "Admin")]
     public IActionResult DeleteCar(int id)
     {
         var car = _repoWrapper.Cars.GetByCondition(x => x.Id == id).FirstOrDefault();

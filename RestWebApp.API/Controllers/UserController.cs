@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RestWebApp.Contracts;
 using RestWebApp.Entities;
@@ -6,6 +7,7 @@ using RestWebApp.Entities.Models;
 namespace RestWebApp.API.Controllers;
 
 [ApiController]
+[Authorize]
 [Route("api/[controller]")]
 public class UserController : ControllerBase
 {
@@ -21,14 +23,16 @@ public class UserController : ControllerBase
     }
     
     [HttpGet]
+    [Authorize(Roles = "User, Admin")]
     public IActionResult GetAllUsers()
     {
         var users = _repoWrapper.Users.GetAll();
-        _logger.LogInformation("Returned all users from database.");
+        _logger.LogInformation("Returned all users from database");
         return Ok(users);
     }
     
     [HttpGet("{id:int}")]
+    [Authorize(Roles = "User, Admin")]
     public IActionResult GetUserById(int id)
     {
         var user = _repoWrapper.Users.GetByCondition(x => x.Id == id).FirstOrDefault();
@@ -44,6 +48,7 @@ public class UserController : ControllerBase
     }
     
     [HttpPost]
+    [Authorize(Roles = "Admin")]
     public IActionResult CreateUser([FromBody] User user)
     {
         _repoWrapper.Users.Create(user);
@@ -53,6 +58,7 @@ public class UserController : ControllerBase
     }
     
     [HttpPut("{id:int}")]
+    [Authorize(Roles = "Admin")]
     public IActionResult UpdateUser(int id, [FromBody] User user)
     {
         if(user.Id != id)
@@ -79,6 +85,7 @@ public class UserController : ControllerBase
     }
     
     [HttpDelete("{id:int}")]
+    [Authorize(Roles = "Admin")]
     public IActionResult DeleteUser(int id)
     {
         var user = _repoWrapper.Users.GetByCondition(x => x.Id == id).FirstOrDefault();
