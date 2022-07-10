@@ -10,10 +10,13 @@ namespace RestWebApp.API.Controllers;
 public class UserController : ControllerBase
 {
     private readonly IRepositoryWrapper _repoWrapper;
+    private readonly ILoggerManager _logger;
     
-    public UserController(IRepositoryWrapper repoWrapper, RepositoryContext context)
+    public UserController(IRepositoryWrapper repoWrapper, RepositoryContext context,
+        ILoggerManager logger)
     {
         _repoWrapper = repoWrapper;
+        _logger = logger;
         context.Database.EnsureCreated();
     }
     
@@ -21,6 +24,7 @@ public class UserController : ControllerBase
     public IActionResult GetAllUsers()
     {
         var users = _repoWrapper.Users.GetAll();
+        _logger.LogInfo("Returned all users from database.");
         return Ok(users);
     }
     
@@ -31,9 +35,11 @@ public class UserController : ControllerBase
         
         if(user == null)
         {
+            _logger.LogWarn("User with id: " + id + " was not found in the database.");
             return NotFound($"User with this id {user.Id} not found");
         }
         
+        _logger.LogInfo("Returned user with id: " + id + " from database.");
         return Ok(user);
     }
     
@@ -42,11 +48,13 @@ public class UserController : ControllerBase
     {
         if(user == null)
         {
+            _logger.LogError("User object sent from client is null.");
             return BadRequest($"Cannot create an empty object of type {typeof(User)}");
         }
         
         _repoWrapper.Users.Create(user);
         _repoWrapper.Save();
+        _logger.LogInfo("User with id: " + user.Id + " was created in the database.");
         return Ok(user);
     }
     
@@ -55,6 +63,7 @@ public class UserController : ControllerBase
     {
         if(user == null || user.Id != id)
         {
+            _logger.LogError("User object sent from client is null.");
             return BadRequest("Object user is null or id is not equal to id in url");
         }
         
@@ -62,6 +71,7 @@ public class UserController : ControllerBase
         
         if(userToUpdate == null)
         {
+            _logger.LogWarn("User with id: " + id + " was not found in the database.");
             return NotFound($"User with id {id} not found");
         }
         
@@ -81,11 +91,13 @@ public class UserController : ControllerBase
         
         if (user == null)
         {
+            _logger.LogWarn("User with id: " + id + " was not found in the database.");
             return NotFound($"User with id {id} not found");
         }
         
         _repoWrapper.Users.Delete(user);
         _repoWrapper.Save();
+        _logger.LogInfo("User with id: " + id + " was deleted from the database.");
         return NoContent();
     }
 }

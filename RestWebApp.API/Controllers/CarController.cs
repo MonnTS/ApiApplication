@@ -10,10 +10,13 @@ namespace RestWebApp.API.Controllers;
 public class CarController : ControllerBase
 {
     private readonly IRepositoryWrapper _repoWrapper;
+    private readonly ILoggerManager _logger;
 
-    public CarController(IRepositoryWrapper repoWrapper, RepositoryContext context)
+    public CarController(IRepositoryWrapper repoWrapper, RepositoryContext context,
+        ILoggerManager logger)
     {
         _repoWrapper = repoWrapper;
+        _logger = logger;
         context.Database.EnsureCreated();
     }
     
@@ -21,6 +24,7 @@ public class CarController : ControllerBase
     public IActionResult GetAllCars()
     {
         var cars = _repoWrapper.Cars.GetAll();
+        _logger.LogInfo("Returned all cars from database.");
         return Ok(cars);
     }
     
@@ -31,9 +35,11 @@ public class CarController : ControllerBase
         
         if(car == null)
         {
+            _logger.LogWarn("Car with id: " + id + " was not found in the database.");
             return NotFound($"Car with this id {car.Id} not found");
         }
         
+        _logger.LogInfo("Returned car with id: " + id + " from database.");
         return Ok(car);
     }
     
@@ -42,11 +48,13 @@ public class CarController : ControllerBase
     {
         if(car == null)
         {
+            _logger.LogError("Car object sent from client is null.");
             return BadRequest($"Cannot create an empty object of type {typeof(Car)}");
         }
         
         _repoWrapper.Cars.Create(car);
         _repoWrapper.Save();
+        _logger.LogInfo("User with id: " + car.Id + " was created in the database.");
         return Ok(car);
     }
     
@@ -55,6 +63,7 @@ public class CarController : ControllerBase
     {
         if(car == null || car.Id != id)
         {
+            _logger.LogError("Car object sent from client is null.");
             return BadRequest("Object car is null or id is not equal to id in url");
         }
         
@@ -62,6 +71,7 @@ public class CarController : ControllerBase
         
         if(carToUpdate == null)
         {
+            _logger.LogWarn("Car with id: " + id + " was not found in the database.");
             return NotFound($"Car with id {id} not found");
         }
             
@@ -81,11 +91,13 @@ public class CarController : ControllerBase
         
         if (car == null)
         {
+            _logger.LogWarn("Car with id: " + id + " was not found in the database.");
             return NotFound($"Car with id {id} not found");
         }
         
         _repoWrapper.Cars.Delete(car);
         _repoWrapper.Save();
+        _logger.LogInfo("Car with id: " + id + " was deleted from the database.");
         return NoContent();
     }
 }

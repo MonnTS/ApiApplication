@@ -28,6 +28,7 @@ public class Startup
             o.UseInMemoryDatabase("Cars"));
 
         services.ConfigureRepository();
+        services.ConfigureLogging();
         services.AddControllers();
         services.AddMvc();
 
