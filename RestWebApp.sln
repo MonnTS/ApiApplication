@@ -10,6 +10,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestWebApp.Repository", "Re
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestWebApp.API", "RestWebApp.API\RestWebApp.API.csproj", "{74C86E85-064C-4221-8BBC-C10E75E33B8A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestWebApp.LoggerService", "RestWebApp.LoggerService\RestWebApp.LoggerService.csproj", "{317A709D-1745-4678-8541-3BF589E238EA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,5 +38,9 @@ Global
 		{74C86E85-064C-4221-8BBC-C10E75E33B8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{74C86E85-064C-4221-8BBC-C10E75E33B8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{74C86E85-064C-4221-8BBC-C10E75E33B8A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{317A709D-1745-4678-8541-3BF589E238EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{317A709D-1745-4678-8541-3BF589E238EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{317A709D-1745-4678-8541-3BF589E238EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{317A709D-1745-4678-8541-3BF589E238EA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
