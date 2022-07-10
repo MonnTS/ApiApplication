@@ -1,11 +1,14 @@
+using System.Reflection;
 using RestWebApp.Contracts;
-using RestWebApp.LoggerService;
 using RestWebApp.Repository;
+using Serilog;
+using ILogger = Serilog.ILogger;
 
 namespace RestWebApp.API.Extensions;
 
 public static class ServicesExtension
 {
+    private static ILogger Logger { get; set; }
     public static void ConfigureCore(this IServiceCollection services)
     {
         services.AddCors(x =>
@@ -26,6 +29,19 @@ public static class ServicesExtension
 
     public static void ConfigureLogging(this IServiceCollection services)
     {
-        services.AddSingleton<ILoggerManager, LoggerManager>();
+        var configuration = new ConfigurationBuilder()
+            .SetBasePath(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location))
+            .AddJsonFile("appsettings.json", false, reloadOnChange: true)
+            .AddJsonFile($"appsettings.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Production"}.json", true, reloadOnChange: true)
+            .Build();
+
+        Logger = new LoggerConfiguration()
+            .ReadFrom.Configuration(configuration)
+            .CreateLogger();
+
+        services.AddLogging(x =>
+        {
+            x.AddSerilog(Logger);
+        });
     }
 }
