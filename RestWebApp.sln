@@ -4,8 +4,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestWebApp.Contracts", "Res
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestWebApp.Entities", "RestWebApp.Entities\RestWebApp.Entities.csproj", "{233C686D-89AE-43B5-8A6E-938C3C3C1204}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestWebApp.Core", "RestWebApp.Core\RestWebApp.Core.csproj", "{8A4B92D2-9A04-4986-A6BC-C975402525EA}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestWebApp.Repository", "RestWebApp.Repository\RestWebApp.Repository.csproj", "{BABC2D40-28A7-4D71-9DCA-D8525A879400}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestWebApp.API", "RestWebApp.API\RestWebApp.API.csproj", "{74C86E85-064C-4221-8BBC-C10E75E33B8A}"
@@ -24,10 +22,6 @@ Global
 		{233C686D-89AE-43B5-8A6E-938C3C3C1204}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{233C686D-89AE-43B5-8A6E-938C3C3C1204}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{233C686D-89AE-43B5-8A6E-938C3C3C1204}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8A4B92D2-9A04-4986-A6BC-C975402525EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8A4B92D2-9A04-4986-A6BC-C975402525EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8A4B92D2-9A04-4986-A6BC-C975402525EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8A4B92D2-9A04-4986-A6BC-C975402525EA}.Release|Any CPU.Build.0 = Release|Any CPU
 		{BABC2D40-28A7-4D71-9DCA-D8525A879400}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{BABC2D40-28A7-4D71-9DCA-D8525A879400}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BABC2D40-28A7-4D71-9DCA-D8525A879400}.Release|Any CPU.ActiveCfg = Release|Any CPU
