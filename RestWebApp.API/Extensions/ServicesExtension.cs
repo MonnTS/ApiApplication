@@ -9,6 +9,7 @@ namespace RestWebApp.API.Extensions;
 public static class ServicesExtension
 {
     private static ILogger Logger { get; set; }
+
     public static void ConfigureCore(this IServiceCollection services)
     {
         services.AddCors(x =>
@@ -32,7 +33,8 @@ public static class ServicesExtension
         var configuration = new ConfigurationBuilder()
             .SetBasePath(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location))
             .AddJsonFile("appsettings.json", false, reloadOnChange: true)
-            .AddJsonFile($"appsettings.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Production"}.json", true, reloadOnChange: true)
+            .AddJsonFile($"appsettings.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Production"}.json",
+                true, reloadOnChange: true)
             .Build();
 
         Logger = new LoggerConfiguration()
