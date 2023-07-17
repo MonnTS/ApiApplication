@@ -5,10 +5,9 @@ using RestWebApp.Entities;
 
 namespace RestWebApp.Repository;
 
-public abstract class RepositoryBase<T> : IDisposable, IRepositoryBase<T> where T : class
+public abstract class RepositoryBase<T> : IRepositoryBase<T> where T : class
 {
     private RepositoryContext RepositoryContext { get; }
-    private bool _isDisposed;
 
     protected RepositoryBase(RepositoryContext repositoryContext)
     {
@@ -38,19 +37,5 @@ public abstract class RepositoryBase<T> : IDisposable, IRepositoryBase<T> where 
     public void Delete(T entity)
     {
         RepositoryContext.Set<T>().Remove(entity);
-    }
-    
-    protected virtual void Dispose(bool disposing)
-    {
-        if(!_isDisposed && disposing)
-                RepositoryContext.Dispose();
-        
-        _isDisposed = true;
-    }
-    
-    public void Dispose()
-    {
-        Dispose(true);
-        GC.SuppressFinalize(this);
     }
 }
